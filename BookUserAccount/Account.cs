@@ -42,6 +42,10 @@ namespace BookUserAccount
         /// <returns>The new amount of books read after deposit</returns>
         public int DepositBooks(int amtbooks)
         {
+            if (amtbooks <= 0)
+            {
+                throw new ArgumentOutOfRangeException($"The {nameof(amtbooks)} must be more than 0");
+            }
             Books += amtbooks;
             return Books;
         }
@@ -54,6 +58,10 @@ namespace BookUserAccount
         /// <returns>The new amount of hours spent reading</returns>
         public int DepositHours(int amthours)
         {
+            if (amthours <= 0)
+            {
+                throw new ArgumentOutOfRangeException($"The {nameof(amthours)} must be more than 0");
+            }
             Hours += amthours;
             return Hours;
         }
