@@ -11,13 +11,20 @@ namespace BookUserAccount.Tests
     [TestClass()]
     public class AccountTests
     {
+        private Account acc;
+
+        [TestInitialize]
+        public void CreateDefaultAccount()
+        {
+            acc = new Account("L Homer");
+        }
+
         // Testing DepositBooks
         [TestMethod()]
         [DataRow(5)]
         [DataRow(3)]
         public void DepositBooks_APositiveAmount_AddToBooks(int amount)
         {
-            Account acc = new("J Leon");
             acc.DepositBooks(amount);
 
             Assert.AreEqual(amount, acc.Books);
@@ -28,7 +35,6 @@ namespace BookUserAccount.Tests
         {
             // AAA - Arrange Act Assert
             // Arrange 
-            Account acc = new("H Jakons");
             int depositBooks = 3;
             int expectedReturn = 3;
 
@@ -45,7 +51,7 @@ namespace BookUserAccount.Tests
         public void DepositBooks_ZeroOrLess_ThrowsArgumentException(int invalidAmount)
         {
             // Arrange
-            Account acc = new("B Howler");
+            // Nothing to add
 
             // Assert => Act
             Assert.ThrowsException<ArgumentOutOfRangeException>
@@ -58,7 +64,6 @@ namespace BookUserAccount.Tests
         [DataRow(7)]
         public void DepositHours_APositiveAmount_AddToHours(int amount)
         {
-            Account acc = new("B Wilbur");
             acc.DepositHours(amount);
 
             Assert.AreEqual(amount, acc.Hours);
@@ -69,7 +74,6 @@ namespace BookUserAccount.Tests
         {
             // AAA - Arrange Act Assert
             // Arrange 
-            Account acc = new("F Flores");
             int depositHours = 1;
             int expectedReturn = 1;
 
@@ -86,7 +90,7 @@ namespace BookUserAccount.Tests
         public void DepositHours_ZeroOrLess_ThrowsArgumentException(int invalidAmount)
         {
             // Arrange
-            Account acc = new("H Nick");
+            // Nothing to add
 
             // Assert => Act
             Assert.ThrowsException<ArgumentOutOfRangeException>
