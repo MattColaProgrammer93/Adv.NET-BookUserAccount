@@ -11,13 +11,16 @@ namespace BookUserAccount.Tests
     [TestClass()]
     public class AccountTests
     {
+        // Testing DepositBooks
         [TestMethod()]
-        public void DepositBooks_APositiveAmount_AddToBooks()
+        [DataRow(5)]
+        [DataRow(3)]
+        public void DepositBooks_APositiveAmount_AddToBooks(int amount)
         {
             Account acc = new("J Leon");
-            acc.DepositBooks(2);
+            acc.DepositBooks(amount);
 
-            Assert.AreEqual(2, acc.Books);
+            Assert.AreEqual(amount, acc.Books);
         }
 
         [TestMethod()]
@@ -36,13 +39,29 @@ namespace BookUserAccount.Tests
             Assert.AreEqual(expectedReturn, returnValue);
         }
 
+        [TestMethod]
+        [DataRow(-3)]
+        [DataRow(0)]
+        public void DepositBooks_ZeroOrLess_ThrowsArgumentException(int invalidAmount)
+        {
+            // Arrange
+            Account acc = new("B Howler");
+
+            // Assert => Act
+            Assert.ThrowsException<ArgumentOutOfRangeException>
+                (() => acc.DepositBooks(invalidAmount));
+        }
+
+        // Testing DepositHours
         [TestMethod()]
-        public void DepositHours_APositiveAmount_AddToHours()
+        [DataRow(3)]
+        [DataRow(7)]
+        public void DepositHours_APositiveAmount_AddToHours(int amount)
         {
             Account acc = new("B Wilbur");
-            acc.DepositHours(3);
+            acc.DepositHours(amount);
 
-            Assert.AreEqual(3, acc.Hours);
+            Assert.AreEqual(amount, acc.Hours);
         }
 
         [TestMethod()]
@@ -59,6 +78,19 @@ namespace BookUserAccount.Tests
 
             // Assert
             Assert.AreEqual(expectedReturn, returnValue);
+        }
+
+        [TestMethod]
+        [DataRow(-4)]
+        [DataRow(-6)]
+        public void DepositHours_ZeroOrLess_ThrowsArgumentException(int invalidAmount)
+        {
+            // Arrange
+            Account acc = new("H Nick");
+
+            // Assert => Act
+            Assert.ThrowsException<ArgumentOutOfRangeException>
+                (() => acc.DepositHours(invalidAmount));
         }
     }
 }
