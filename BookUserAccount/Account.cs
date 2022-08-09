@@ -11,6 +11,8 @@ namespace BookUserAccount
     /// </summary>
     public class Account
     {
+        private string userName;
+
         /// <summary>
         /// Creates an account with the specific user, and has hours and books of 0
         /// </summary>
@@ -22,7 +24,69 @@ namespace BookUserAccount
         /// <summary>
         /// The user's name of the account.
         /// </summary>
-        public string UserName { get; set; }
+        public string UserName 
+        {
+            get { return userName; }
+            set 
+            {
+                // Check if value is null
+                if (value == null)
+                {
+                    throw new ArgumentNullException($"{nameof(UserName)} cannot be null");
+                }
+
+                // If the value does not have any characters or has whitespace
+                if (value.Trim() == String.Empty)
+                {
+                    throw new ArgumentException($"{nameof(UserName)} must have some text");
+                }
+
+                // Check the Owner only has characters
+                if (IsUserNameValid())
+                {
+                    userName = value;
+                }
+                else
+                {
+                    throw new ArgumentException($"{nameof(UserName)} can be up to 20 characters, A-Z and whitespaces only");
+                }
+                // If the value contains any numbers or special characters - throws ArgumentException
+
+
+                userName = value; 
+            } 
+        }
+
+        /// <summary>
+        /// Checks if the UserName is less than or equal to 20 characters, A - Z 
+        /// and whitespace characters are allowed
+        /// </summary>
+        /// <returns></returns>
+        private bool IsUserNameValid()
+        {
+            char[] validCharacters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'
+                , 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x'
+                , 'y', 'z' };
+
+            userName = userName.ToLower(); // Only need to compare to one casting
+
+            const int MaxLengthUserName = 20;
+
+            if (userName.Length > MaxLengthUserName)
+            {
+                return false;
+            }
+
+            foreach(char letter in userName)
+            {
+                if (letter != ' ' && !validCharacters.Contains(letter))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 
         /// <summary>
         /// The amount of books that the user has read.

@@ -23,6 +23,7 @@ namespace BookUserAccount.Tests
         [TestMethod()]
         [DataRow(5)]
         [DataRow(3)]
+        [TestCategory("DepositBooks")]
         public void DepositBooks_APositiveAmount_AddToBooks(int amount)
         {
             acc.DepositBooks(amount);
@@ -31,6 +32,7 @@ namespace BookUserAccount.Tests
         }
 
         [TestMethod()]
+        [TestCategory("DepositBooks")]
         public void DepositBooks_APositiveAmount_ReturnsUpdatedBooks()
         {
             // AAA - Arrange Act Assert
@@ -48,6 +50,7 @@ namespace BookUserAccount.Tests
         [TestMethod]
         [DataRow(-3)]
         [DataRow(0)]
+        [TestCategory("DepositBooks")]
         public void DepositBooks_ZeroOrLess_ThrowsArgumentException(int invalidAmount)
         {
             // Arrange
@@ -62,6 +65,7 @@ namespace BookUserAccount.Tests
         [TestMethod()]
         [DataRow(3)]
         [DataRow(7)]
+        [TestCategory("DepositHours")]
         public void DepositHours_APositiveAmount_AddToHours(int amount)
         {
             acc.DepositHours(amount);
@@ -70,6 +74,7 @@ namespace BookUserAccount.Tests
         }
 
         [TestMethod()]
+        [TestCategory("DepositHours")]
         public void DepositHours_APositiveAmount_ReturnsUpdatedBooks()
         {
             // AAA - Arrange Act Assert
@@ -87,6 +92,7 @@ namespace BookUserAccount.Tests
         [TestMethod]
         [DataRow(-4)]
         [DataRow(-6)]
+        [TestCategory("DepositHours")]
         public void DepositHours_ZeroOrLess_ThrowsArgumentException(int invalidAmount)
         {
             // Arrange
@@ -95,6 +101,38 @@ namespace BookUserAccount.Tests
             // Assert => Act
             Assert.ThrowsException<ArgumentOutOfRangeException>
                 (() => acc.DepositHours(invalidAmount));
+        }
+
+        [TestMethod]
+        public void UserName_SetAsNull_ThrowsArgumentNullException()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => acc.UserName = null);
+        }
+
+        [TestMethod]
+        public void UserName_SetAsWhiteSpaceOrEmptyString_ThrowsArgumentException()
+        {
+            Assert.ThrowsException<ArgumentException>(() => acc.UserName = String.Empty);
+            Assert.ThrowsException<ArgumentException>(() => acc.UserName = "   ");
+        }
+
+        [TestMethod]
+        [DataRow("Matthew")]
+        [DataRow("Jack Brown")]
+        [DataRow("Marcus Gold Thranzes")]
+        public void UserName_SetAsUpTo20Characters_SetsSuccessfully(string userName)
+        {
+            acc.UserName = userName;
+            Assert.AreEqual(userName, acc.UserName);
+        }
+
+        [TestMethod]
+        [DataRow("Jacob the 4th")]
+        [DataRow("Marcus Gold Threanzesi")]
+        [DataRow("#$%$")]
+        public void UserName_InvalidUserName_ThrowsArgumentException(string userName)
+        {
+            Assert.ThrowsException<ArgumentException>(() => acc.UserName = userName);
         }
     }
 }
